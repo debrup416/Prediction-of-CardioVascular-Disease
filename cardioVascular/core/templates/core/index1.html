@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+
+<head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiovascular Disease Predictor</title>
+    <script src="https://kit.fontawesome.com/5f3f547070.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    
+    <style>
+        html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #121312;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Website Title */
+
+.container {
+    padding: 90px;
+    position: relative;
+    background-image: url('/static/basiccardi.jpg');
+    background-size: cover;
+    background-position: 0% 30%;
+    text-shadow: 1px 1px 5px #000000;
+}
+
+.container-heading {
+    margin: 0;
+}
+
+.heading_font {
+    color: #ffffff;
+    font-family: Raleway;
+    font-size: 52px;
+    font-weight: 700;
+}
+
+.description p {
+    color: #ffffff;
+    font-style: italic;
+    font-size: 25px;
+    margin: -5px 0 0;
+    font-weight: bold;
+}
+
+
+/* Text Area */
+
+.ml-container {
+    margin: 30px 0;
+    flex: 1 0 auto;
+    background-color: #121312;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.form {
+    text-align: center;
+    width: 250px;
+    height: 25px;
+    margin-bottom: 5px;
+    background-color: #040404;
+}
+
+input[type=text],
+select {
+    width: 60%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid rgb(255, 0, 0);
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+label {
+    display: inline block;
+    width: 200px;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #f9f3f3;
+    text-align: center;
+    float: left;
+}
+
+
+/* Predict Button */
+
+.my-cta-button {
+    background: #f9f9f9;
+    border: 2px solid #000000;
+    border-radius: 1000px;
+    box-shadow: 3px 3px #8c8c8c;
+    margin-top: 10px;
+    padding: 10px 36px;
+    color: #000000;
+    display: inline-block;
+    font: italic bold 20px/1 "Calibri", sans-serif;
+    text-align: center;
+}
+
+.my-cta-button:hover {
+    color: #191919;
+    border: 2px solid #46424b;
+}
+
+.my-cta-button:active {
+    box-shadow: 0 0;
+}
+
+
+/* Contact */
+
+.contact-icon {
+    color: #ffffff;
+    padding: 7px;
+}
+
+.contact-icon:hover {
+    color: #8c8c8c;
+}
+
+
+/* Footer */
+
+.footer {
+    flex-shrink: 0;
+    position: relative;
+    padding: 20px;
+    background: linear-gradient(45deg, #161616, #383436, #161616);
+    background-size: 500% 500%;
+    animation: change-gradient 10s ease-in-out infinite;
+}
+
+.footer-description {
+    color: #ffffff;
+    margin: 0;
+    font-size: 12px;
+}
+
+
+/* Result */
+
+.results {
+    color: #ffffff;
+    padding: 30px 0 0;
+    flex: 1 0 auto;
+}
+
+.danger {
+    color: #ff0000;
+}
+
+.safe {
+    color: #18b418;
+}
+    </style>
+</head>
+
+<body>
+
+  <!-- Website Title -->
+  
+    <div class="container">
+        <h1 class='container-heading'><span class="heading_font"> Cardiovascular Disease Predictor </span></h1>
+        <div class='description'><br><br>
+        <p>A Machine Learning Web Application that predicts chances of having Heart Disease</p><br><br>
+            <p>(Note:This model is 95.08% accurate)</p>
+        </div>
+    </div>
+
+    <!-- Text Area -->
+    <div class="ml-container">
+
+        <form  action="{% url 'predict' %}" method="POST">
+            {% csrf_token %}
+        <label for="age">Age</label>
+
+       { <input type="text" id="age" name="age" placeholder="Your age.."><br>}
+        
+        <label for="sex">Sex</label>
+        <select id="sex" name="sex">
+            <option selected>----select option----</option>
+            <option value="1">Male</option>
+            <option value="0">Female</option>
+        </select><br>
+
+
+
+        <label for="cp">Chest Pain Type</label>
+        <select id="cp" name="cp">
+            <option selected>----select option----</option>
+            <option value="0">Typical Angina</option>
+            <option value="1">Atypical Angina</option>
+            <option value="2">Non-anginal Pain</option>
+            <option value="3">Asymtomatic</option>
+        </select><br>
+
+        <label for="trestbps">Resting Blood Pressure</label>
+        <input type="text" id="trestbps" name="trestbps" placeholder="A number in range [94-200] mmHg"><br>
+        <label for="chol">Serum Cholesterol</label>
+        <input type="text" id="chol" name="chol" placeholder="A number in range [126-564] mg/dl"><br>
+        <label for="fbs">Fasting Blood Sugar</label>
+
+        <select id="fbs" name="fbs">
+            <option selected>----select option----</option>
+            <option value="1">Greater than 120 mg/dl</option>
+            <option value="0">Less than 120 mg/dl</option>
+        </select><br>
+
+        <label for="restecg">Resting ECG Results</label>
+        <select id="restecg" name="restecg">
+            <option selected>----select option----</option>
+            <option value="0">Normal</option>
+            <option value="1">Having ST-T wave abnormality</option>
+            <option value="2">Probable or definite left ventricular hypertrophy</option>
+        </select><br>
+
+        <label for="thalach">Max Heart Rate </label>
+        <input type="text" id="thalach" name="thalach" placeholder="A number in range [71-202] bpm"><br>
+
+        <label for="exang">Exercise-induced Angina</label>
+        <select id="exang" name="exang">
+            <option selected>----select option----</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select><br>
+
+        <label for="oldpeak">ST depression</label>
+        <input type="text" id="oldpeak" name="oldpeak" placeholder="ST depression, typically in [0-6.2]"><br>
+
+        <label for="slope">Slope of the peak exercise ST segment</label>
+        <select id="slope" name="slope">
+            <option selected>----select option----</option>
+            <option value="0">Upsloping</option>
+            <option value="1">Flat</option>
+            <option value="2">Downsloping</option>
+        </select><br>
+
+        <label for="ca">Number of Major vessels</label>
+        <input type="text" id="ca" name="ca" placeholder="Typically in [0-4]"><br> 
+
+        <label for="thal">Thalassemia</label> 
+        <select id="thal" name="thal">
+            <option selected>----select option----</option>
+            <option value="0">Normal</option>
+            <option value="1">Fixed Defect</option> 
+            <option value="2">Reversible Defect</option>  
+        </select><br>
+
+        <input type="submit" class="my-cta-button" value="Predict">
+    </form>
+  </div>
+
+    <!-- Footer -->
+    <div class='footer'>
+        <div class="contact">
+            <a target="_blank" href="https://github.com/teamfourA/PREDICTION-OF-CARDIOVASCULAR-DISEASE">
+                <span class="fab fa-github fa-lg contact-icon"></span></a>
+        </div>
+        <p class='footer-description'>Made by Group No. 3, ECE Department, TMSL</p>
+    </div>
+
+</body>
+
+</html>
