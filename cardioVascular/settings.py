@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2(m35+shl))cap8mq**y6rm8y@mf6a3!@=39cq@hnxig(hu1b8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost','https://cardiovascularml.herokuapp.com/','cardiovascularml.herokuapp.com']
 
 
 # Application definition
